@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./AuthSlice";
+import topupReducer from "./slices/topupSlice";
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer,
+    topup: topupReducer,
   },
 });
 
