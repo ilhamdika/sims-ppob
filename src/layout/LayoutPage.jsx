@@ -22,7 +22,7 @@ export default function LayoutPage({ children }) {
           </div>
 
           {/* Konten */}
-          <div className="sm:pt-20 min-h-screen">
+          <div className="sm:pt-20 min-h-screen lg:px-20">
             <main className="dark:bg-dark">{children}</main>
           </div>
         </div>
