@@ -21,8 +21,8 @@ export const Topup = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         <div className="md:col-span-7 p-6 dark:bg-gray-700">
-          <input type="number" value={amount} onChange={(e) => dispatch(setAmount(e.target.value))} className={`w-full border-2 h-10 rounded-sm px-3 ${isInvalid ? "border-red-500" : "border-gray-300"}`} placeholder="Masukkan nominal" />
           {isInvalid && <p className="text-red-500 text-sm mt-1">Minimal top up Rp10.000</p>}
+          <input type="number" value={amount} onChange={(e) => dispatch(setAmount(e.target.value))} className={`w-full border-2 h-10 rounded-sm px-3 ${isInvalid ? "border-red-500" : "border-gray-300"}`} placeholder="Masukkan nominal" />
           <button type="submit" disabled={!amount} className={`w-full mt-4 h-10 rounded-sm text-white font-bold ${amount ? "bg-green-500 hover:bg-green-600" : "bg-gray-400 cursor-not-allowed"}`}>
             Top Up
           </button>
