@@ -12,6 +12,9 @@ export const Transaction = () => {
         <CardTransaction nominal={50000} tanggal="14 Feb 2025" keterangan="Isi Saldo" tipe="topup" />
         <CardTransaction nominal={25000} tanggal="15 Feb 2025" keterangan="Pembayaran" tipe="pembayaran" />
       </div>
+      <div className="flex justify-center mt-4">
+        <button className="text-red-500 font-bold text-xl">Show more</button>
+      </div>
     </div>
   );
 };
