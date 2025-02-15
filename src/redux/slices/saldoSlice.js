@@ -17,6 +17,10 @@ export const fetchSaldo = createAsyncThunk("saldo/fetchSaldo", async (_, { rejec
     const data = await response.json();
     if (data.status === 0) {
       return data.data.balance;
+    } else if (data.status === 401) {
+      localStorage.removeItem("token");
+      window.location.href = "/login";
+      return;
     } else {
       return rejectWithValue(data.message);
     }
@@ -39,6 +43,10 @@ export const fetchProfile = createAsyncThunk("saldo/fetchProfile", async (_, { r
     const data = await response.json();
     if (data.status === 0) {
       return { name: `${data.data.first_name} ${data.data.last_name}`, profile_image: data.data.profile_image };
+    } else if (data.status === 401) {
+      localStorage.removeItem("token");
+      window.location.href = "/login";
+      return;
     } else {
       return rejectWithValue(data.message);
     }
