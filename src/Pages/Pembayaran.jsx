@@ -4,11 +4,14 @@ import Info from "../components/Info";
 import { useDispatch, useSelector } from "react-redux";
 import { setAmount } from "../redux/slices/topupSlice";
 import { fetchSaldo } from "../redux/slices/saldoSlice";
+import SuccessPopup from "../components/SuccessPopup";
 
 export const Pembayaran = () => {
   const apiUrlServices = import.meta.env.VITE_API_URL + "services";
   const apiUrlTransaction = import.meta.env.VITE_API_URL + "transaction";
   const [service, setService] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
+
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const serviceCode = params.get("service_code")?.toUpperCase();
@@ -58,6 +61,8 @@ export const Pembayaran = () => {
     if (!service) return;
     dispatch(setAmount(service.service_tariff));
 
+    setSuccessMessage("");
+
     const token = localStorage.getItem("token");
     if (!token) {
       alert("Anda harus login terlebih dahulu.");
@@ -76,7 +81,7 @@ export const Pembayaran = () => {
 
       const result = await response.json();
       if (response.ok && result.status === 0) {
-        alert("Pembayaran berhasil!");
+        setSuccessMessage("Pembayaran berhasil!");
         dispatch(fetchSaldo());
       } else {
         alert("Pembayaran gagal: " + result.message);
@@ -106,6 +111,7 @@ export const Pembayaran = () => {
           {saldo < (service?.service_tariff || 0) ? "Saldo Tidak Cukup" : "Bayar"}
         </button>
       </div>
+      <SuccessPopup message={successMessage} onClose={() => setSuccessMessage("")} />
     </div>
   );
 };
