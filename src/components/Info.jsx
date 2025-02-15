@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSaldo, fetchProfile } from "../redux/slices/saldoSlice";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-import ProfilePhoto from "../assets/images/Profile Photo.PNG";
+import ProfilePhoto from "@/assets/images/Profile Photo.PNG";
 
 export const Info = () => {
   const dispatch = useDispatch();

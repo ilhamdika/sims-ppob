@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { FaLock, FaEye, FaEyeSlash, FaAt, FaUser } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import IlustrasiLogin from "../assets/images/Illustrasi Login.png";
-import Logo from "../assets/images/logo.png";
+import IlustrasiLogin from "@/assets/images/Illustrasi Login.png";
+import Logo from "@/assets/images/logo.png";
 
 const Registrasi = () => {
   const [formData, setFormData] = useState({
