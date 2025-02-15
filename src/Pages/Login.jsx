@@ -41,6 +41,12 @@ const Login = () => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleLogin();
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 min-h-screen items-center">
       <div className="md:col-span-7 p-6 dark:bg-gray-700 flex flex-col justify-center">
@@ -56,11 +62,19 @@ const Login = () => {
           {errorMessage && <p className="text-red-500 text-sm mb-4 text-center">{errorMessage}</p>}
           <div className="relative mb-4">
             <FaAt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
-            <input type="text" name="email" className="w-full border-2 h-10 rounded-sm pl-10 pr-3" placeholder="Masukan email anda" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type="text" name="email" className="w-full border-2 h-10 rounded-sm pl-10 pr-3" placeholder="Masukan email anda" value={email} onChange={(e) => setEmail(e.target.value)} onKeyDown={handleKeyDown} />
           </div>
           <div className="relative mb-4">
             <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
-            <input type={showPassword ? "text" : "password"} name="password" className="w-full border-2 h-10 rounded-sm pl-10 pr-10" placeholder="Masukan password anda" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              className="w-full border-2 h-10 rounded-sm pl-10 pr-10"
+              placeholder="Masukan password anda"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
             <button type="button" className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" onClick={() => setShowPassword(!showPassword)}>
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
