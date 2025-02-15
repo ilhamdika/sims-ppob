@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import IlustrasiLogin from "@/assets/images/Illustrasi Login.png";
-import Logo from "@/assets/images/logo.png";
+import Logo from "@/assets/images/Logo.png";
 import { FaLock, FaEye, FaEyeSlash, FaAt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 

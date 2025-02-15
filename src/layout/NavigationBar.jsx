@@ -4,7 +4,7 @@ import Button from "../components/Button";
 import { BsList } from "react-icons/bs";
 import { IoCloseSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import Logo from "@/assets/images/logo.png";
+import Logo from "@/assets/images/Logo.png";
 
 export default function NavigationBar({ text, click }) {
   let Menu = [
