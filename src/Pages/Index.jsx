@@ -48,7 +48,7 @@ export const Index = () => {
 
       <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-12 gap-4 mt-8">
         {services.map((service, index) => (
-          <Link to="/" key={index} className="flex flex-col items-center dark:bg-gray-700 rounded-lg">
+          <Link to={`/pembayaran?service_code=${service.name.toLowerCase().replace(/\s+/g, "-")}&i=${encodeURIComponent(service.icon)}`} key={index} className="flex flex-col items-center dark:bg-gray-700 rounded-lg">
             <div className="flex flex-col items-center dark:bg-gray-700 rounded-lg">
               <img src={service.icon} alt={service.name} className="w-16 h-16" />
               <p className="text-center text-gray-800 dark:text-gray-300 text-sm mt-2">{service.name}</p>

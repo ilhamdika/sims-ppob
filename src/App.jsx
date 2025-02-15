@@ -5,23 +5,35 @@ import HomePage from "./Pages/Index";
 import Topup from "./Pages/Topup";
 import Transaction from "./Pages/Transaction";
 import Akun from "./Pages/Akun";
-import AOS from "aos";
-import { useEffect } from "react";
+import Pembayaran from "./Pages/Pembayaran";
+import Login from "./Pages/Login";
+import Registrasi from "./Pages/Registrasi";
+import ProtectedRoute from "./ProtectedRoute";
 
-const app = () => {
-  useEffect(() => {
-    AOS.init();
-  }, []);
+const App = () => {
   return (
-    <LayoutPage>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/topup" element={<Topup />} />
-        <Route path="/transaction" element={<Transaction />} />
-        <Route path="/akun" element={<Akun />} />
-      </Routes>
-    </LayoutPage>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/registrasi" element={<Registrasi />} />
+
+      <Route
+        path="/*"
+        element={
+          <ProtectedRoute>
+            <LayoutPage>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/topup" element={<Topup />} />
+                <Route path="/transaction" element={<Transaction />} />
+                <Route path="/akun" element={<Akun />} />
+                <Route path="/pembayaran" element={<Pembayaran />} />
+              </Routes>
+            </LayoutPage>
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
   );
 };
 
-export default app;
+export default App;
