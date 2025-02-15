@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import IlustrasiLogin from "@/assets/images/Illustrasi Login.png";
 import Logo from "@/assets/images/Logo.png";
 import { FaLock, FaEye, FaEyeSlash, FaAt } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { login } from "../redux/slices/authSlice";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [token, setToken] = useState(localStorage.getItem("token") || "");
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const urlApi = import.meta.env.VITE_API_URL + "login";
-
-  useEffect(() => {
-    if (token) {
-      navigate("/");
-    }
-  }, [token]);
 
   const handleLogin = async () => {
     setErrorMessage("");
@@ -35,7 +31,8 @@ const Login = () => {
 
       if (data.status === 0) {
         localStorage.setItem("token", data.data.token);
-        setToken(data.data.token);
+        dispatch(login({ isAuthenticated: true, token: data.data.token }));
+        navigate("/");
       } else {
         setErrorMessage(data.message || "Login gagal, periksa kembali data Anda.");
       }
