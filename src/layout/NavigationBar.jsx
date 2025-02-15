@@ -50,10 +50,10 @@ export default function NavigationBar({ text, click }) {
     <div className={`navbar ${visible ? "sm:block sm:relative" : "sm:hidden"}`}>
       <div className="shadow-md w-full fixed-absolute top-0 left-0 sm:fixed sm:bg-red-300 sm:dark:bg-gray-900 ">
         <div className="md:flex items-center justify-between py-4 md:px-10 px-7">
-          <div className="text-2xl cursor-pointer flex items-center dark:text-white">
+          <Link to="/" className="text-2xl cursor-pointer flex items-center dark:text-white">
             <img src={Logo} alt="Logo" className="w-10 h-10 mr-2" />
-            <Link to="/">SIMS PPOB</Link>
-          </div>
+            <p className="font-bold">SIMS</p>
+          </Link>
           <div onClick={() => setOpen(!open)} className="text-3xl absolute right-8 top-4 cursor-pointer md:hidden">
             {open ? <IoCloseSharp className="dark:text-white" /> : <BsList className="dark:text-white" />}
           </div>
