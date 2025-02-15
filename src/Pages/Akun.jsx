@@ -2,10 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaAt, FaPencilAlt } from "react-icons/fa";
 import ProfilePhoto from "@/assets/images/profilPict.png";
+import SuccessPopup from "../components/SuccessPopup";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/slices/authSlice";
 
 export const Akun = () => {
   const [selectedImage, setSelectedImage] = useState(ProfilePhoto);
   const [isEditing, setIsEditing] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     firstName: "",
@@ -54,6 +59,7 @@ export const Akun = () => {
   }, [navigate]);
 
   const handleImageChange = async (event) => {
+    setSuccessMessage("");
     const file = event.target.files[0];
 
     if (file) {
@@ -76,7 +82,7 @@ export const Akun = () => {
         const result = await response.json();
         if (response.ok) {
           setSelectedImage(result.data.profile_image);
-          alert("Foto profil berhasil diperbarui!");
+          setSuccessMessage("Foto profil berhasil diperbarui!");
         } else {
           alert("Gagal memperbarui foto profil: " + result.message);
         }
@@ -98,6 +104,7 @@ export const Akun = () => {
 
   const handleSave = async () => {
     try {
+      setSuccessMessage("");
       const token = localStorage.getItem("token");
       const response = await fetch(import.meta.env.VITE_API_URL + "profile/update", {
         method: "PUT",
@@ -114,7 +121,7 @@ export const Akun = () => {
       const result = await response.json();
       console.log(result);
       if (response.ok) {
-        alert("Profil berhasil diperbarui!");
+        setSuccessMessage("Profil berhasil diperbarui!");
         setIsEditing(false);
       } else {
         alert("Gagal memperbarui profil.");
@@ -129,8 +136,11 @@ export const Akun = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
+    if (window.confirm("Apakah Anda yakin ingin logout?")) {
+      localStorage.removeItem("token");
+      dispatch(logout());
+      navigate("/login");
+    }
   };
 
   return (
@@ -200,6 +210,7 @@ export const Akun = () => {
           </>
         )}
       </div>
+      <SuccessPopup message={successMessage} onClose={() => setSuccessMessage("")} />
     </div>
   );
 };
