@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaAt, FaCamera } from "react-icons/fa";
-import ProfilePhoto from "@/assets/images/Profile Photo.PNG";
+import ProfilePhoto from "@/assets/images/profilPict.PNG";
 
 export const Akun = () => {
   const [selectedImage, setSelectedImage] = useState(ProfilePhoto);
