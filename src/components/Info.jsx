@@ -8,17 +8,23 @@ export const Info = () => {
   const dispatch = useDispatch();
   const { saldo, name, profilePict, loading } = useSelector((state) => state.saldo);
   const [showBalance, setShowBalance] = useState(false);
-  const [imageSrc, setImageSrc] = useState(profilePict || ProfilePhoto);
+  const [imageSrc, setImageSrc] = useState(ProfilePhoto);
 
   useEffect(() => {
     dispatch(fetchSaldo());
     dispatch(fetchProfile());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (profilePict) {
+      setImageSrc(profilePict);
+    }
+  }, [profilePict]);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
       <div className="md:col-span-5 p-6 dark:bg-gray-700">
-        <img src={imageSrc} alt="Profile" className="w-auto h-auto rounded-full" onError={() => setImageSrc(ProfilePhoto)} />
+        <img src={imageSrc} alt="Profile" className="w-32 h-32 rounded-full" onError={() => setImageSrc(ProfilePhoto)} />
         <p className="text-gray-800 dark:text-gray-300 text-xl">Selamat datang</p>
         <h3 className="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-200">{name || "Loading..."}</h3>
       </div>
