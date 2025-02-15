@@ -1,11 +1,41 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import IlustrasiLogin from "../assets/images/Illustrasi Login.png";
 import Logo from "../assets/images/logo.png";
 import { FaLock, FaEye, FaEyeSlash, FaAt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const navigate = useNavigate();
+  const urlApi = import.meta.env.VITE_API_URL + "login";
+
+  const handleLogin = async () => {
+    setErrorMessage("");
+
+    try {
+      const response = await fetch(urlApi, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (data.status === 0) {
+        localStorage.setItem("token", data.data.token);
+        navigate("/");
+      } else {
+        setErrorMessage(data.message || "Login gagal, periksa kembali data Anda.");
+      }
+    } catch (error) {
+      setErrorMessage("Terjadi kesalahan, coba lagi nanti.");
+    }
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 min-h-screen items-center">
@@ -19,22 +49,23 @@ const Login = () => {
         </div>
 
         <div className="max-w-md mx-auto w-full">
+          {errorMessage && <p className="text-red-500 text-sm mb-4 text-center">{errorMessage}</p>}
           <div className="relative mb-4">
             <FaAt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
-            <input type="text" name="firstName" className="w-full border-2 h-10 rounded-sm pl-10 pr-3" placeholder="Masukan email anda" />
+            <input type="text" name="email" className="w-full border-2 h-10 rounded-sm pl-10 pr-3" placeholder="Masukan email anda" value={email} onChange={(e) => setEmail(e.target.value)} />
           </div>
           <div className="relative mb-4">
             <FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
-            <input type={showPassword ? "text" : "password"} name="password" className="w-full border-2 h-10 rounded-sm pl-10 pr-10" placeholder="Masukan password anda" />
+            <input type={showPassword ? "text" : "password"} name="password" className="w-full border-2 h-10 rounded-sm pl-10 pr-10" placeholder="Masukan password anda" value={password} onChange={(e) => setPassword(e.target.value)} />
             <button type="button" className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500" onClick={() => setShowPassword(!showPassword)}>
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </div>
-          <button type="button" className="w-full mt-4 h-10 rounded-sm text-white bg-red-500">
+          <button type="button" className="w-full mt-4 h-10 rounded-sm text-white bg-red-500" onClick={handleLogin}>
             Login
           </button>
           <p className="mt-4 text-center text-sm text-gray-700 dark:text-gray-300">
-            Belum punya akun?Registrasi{" "}
+            Belum punya akun? Registrasi{" "}
             <Link to="/registrasi" className="text-red-500">
               disini
             </Link>

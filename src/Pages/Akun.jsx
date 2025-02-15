@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaUser, FaAt, FaCamera } from "react-icons/fa";
 import ProfilePhoto from "../assets/images/Profile Photo.PNG";
 
@@ -10,6 +11,8 @@ export const Akun = () => {
     firstName: "Nama Depanku",
     lastName: "Nama Belakangku",
   });
+
+  const navigate = useNavigate();
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -40,6 +43,11 @@ export const Akun = () => {
       firstName: "Nama Depanku",
       lastName: "Nama Belakangku",
     });
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
   };
 
   return (
@@ -96,7 +104,7 @@ export const Akun = () => {
             <button onClick={handleEdit} className="w-full mt-4 h-10 rounded-sm text-red-500 border border-red-500">
               Edit Profil
             </button>
-            <button type="button" className="w-full mt-4 h-10 rounded-sm text-white bg-red-500">
+            <button onClick={handleLogout} className="w-full mt-4 h-10 rounded-sm text-white bg-red-500">
               Logout
             </button>
           </>

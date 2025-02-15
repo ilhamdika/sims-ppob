@@ -1,5 +1,6 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux"; // Ambil state dari Redux
 import LayoutPage from "./layout/LayoutPage";
 import HomePage from "./Pages/Index";
 import Topup from "./Pages/Topup";
@@ -8,7 +9,12 @@ import Akun from "./Pages/Akun";
 import Pembayaran from "./Pages/Pembayaran";
 import Login from "./Pages/Login";
 import Registrasi from "./Pages/Registrasi";
-import ProtectedRoute from "./ProtectedRoute";
+
+const ProtectedRoute = ({ children }) => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
+};
 
 const App = () => {
   return (
