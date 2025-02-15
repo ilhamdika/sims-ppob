@@ -83,6 +83,10 @@ export const Pembayaran = () => {
       if (response.ok && result.status === 0) {
         setSuccessMessage("Pembayaran berhasil!");
         dispatch(fetchSaldo());
+      } else if (response.status === 401) {
+        localStorage.removeItem("token");
+        window.location.href = "/login";
+        return;
       } else {
         alert("Pembayaran gagal: " + result.message);
       }

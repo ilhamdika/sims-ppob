@@ -26,6 +26,7 @@ export const Akun = () => {
         const response = await fetch(import.meta.env.VITE_API_URL + "profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
+        console.log(response);
 
         const result = await response.json();
         if (response.ok) {
@@ -38,6 +39,9 @@ export const Akun = () => {
           if (result.data.profile_image) {
             setSelectedImage(result.data.profile_image);
           }
+        } else if (response.status === 401) {
+          localStorage.removeItem("token");
+          navigate("/login");
         } else {
           alert("Gagal mengambil data profil.");
         }

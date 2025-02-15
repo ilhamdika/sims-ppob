@@ -31,12 +31,21 @@ export const Index = () => {
         const serviceResult = await serviceResponse.json();
         if (serviceResponse.ok && serviceResult.status === 0) {
           setServices(serviceResult.data);
+        } else if (serviceResponse.status === 401) {
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+          return;
         }
+        // console.log(serviceResponse.status);
 
         const bannerResponse = await fetch(apiUrlBanners, { headers });
         const bannerResult = await bannerResponse.json();
         if (bannerResponse.ok && bannerResult.status === 0) {
           setBanners(bannerResult.data);
+        } else if (bannerResponse.status === 401) {
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+          return;
         }
       } catch (error) {
         console.error("Error fetching data:", error);
