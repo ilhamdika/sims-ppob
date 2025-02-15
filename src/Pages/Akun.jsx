@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaUser, FaAt, FaCamera } from "react-icons/fa";
+import { FaUser, FaAt, FaPencilAlt } from "react-icons/fa";
 import ProfilePhoto from "@/assets/images/profilPict.png";
 
 export const Akun = () => {
@@ -141,7 +141,7 @@ export const Akun = () => {
         <input type="file" accept="image/*" id="upload-photo" className="hidden" onChange={handleImageChange} />
 
         <label htmlFor="upload-photo" className="absolute bottom-2 right-2 bg-white p-2 rounded-full border border-gray-300 cursor-pointer shadow-md hover:bg-gray-100">
-          <FaCamera className="text-gray-600" />
+          <FaPencilAlt className="text-gray-600" />
         </label>
       </div>
 
