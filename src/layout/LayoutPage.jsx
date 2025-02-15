@@ -26,9 +26,6 @@ export default function LayoutPage({ children }) {
             <main className="dark:bg-dark">{children}</main>
           </div>
         </div>
-        <footer className="bg-gray-800 text-white py-6 text-center">
-          <p>&copy; 2024 Ilham Dika. All rights reserved.</p>
-        </footer>
       </div>
     </>
   );
