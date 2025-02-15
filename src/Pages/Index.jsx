@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
@@ -42,9 +42,15 @@ const services = [
 const banners = [Banner1, Banner2, Banner3, Banner4, Banner5];
 
 export const Index = () => {
+  const [saldo, setSaldo] = useState(null);
+  const [name, setName] = useState(null);
+  const [profilePict, setProfilePict] = useState(null);
+  const apiUrlBalance = import.meta.env.VITE_API_URL + "balance";
+  const apiUrlProfile = import.meta.env.VITE_API_URL + "profile";
+
   return (
     <div className="container mx-auto lg:py-12">
-      <Info namaUser="Nama User Component" saldo="10.000.000" />
+      <Info />
 
       <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-12 gap-4 mt-8">
         {services.map((service, index) => (
