@@ -10,9 +10,16 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
 
   const navigate = useNavigate();
   const urlApi = import.meta.env.VITE_API_URL + "login";
+
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, [token]);
 
   const handleLogin = async () => {
     setErrorMessage("");
@@ -28,7 +35,7 @@ const Login = () => {
 
       if (data.status === 0) {
         localStorage.setItem("token", data.data.token);
-        navigate("/");
+        setToken(data.data.token);
       } else {
         setErrorMessage(data.message || "Login gagal, periksa kembali data Anda.");
       }
@@ -36,12 +43,6 @@ const Login = () => {
       setErrorMessage("Terjadi kesalahan, coba lagi nanti.");
     }
   };
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      navigate("/");
-    }
-  }, []);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 min-h-screen items-center">
