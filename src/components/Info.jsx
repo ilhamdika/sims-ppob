@@ -1,16 +1,83 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import ProfilePhoto from "../assets/images/Profile Photo.PNG";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
+import ProfilePhoto from "../assets/images/Profile Photo.PNG";
 
-export const Info = ({ namaUser, saldo }) => {
+export const Info = () => {
+  const [saldo, setSaldo] = useState(null);
+  const [name, setName] = useState(null);
+  const [profilePict, setProfilePict] = useState(null);
+  const apiUrlBalance = import.meta.env.VITE_API_URL + "balance";
+  const apiUrlProfile = import.meta.env.VITE_API_URL + "profile";
   const [showBalance, setShowBalance] = useState(false);
+  const [imageSrc, setImageSrc] = useState(profilePict || ProfilePhoto);
+
+  const fetchBalance = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token not found");
+        return;
+      }
+
+      const response = await fetch(apiUrlBalance, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await response.json();
+      if (data.status === 0) {
+        setSaldo(data.data.balance);
+      } else {
+        console.error("Gagal mengambil saldo:", data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching balance:", error);
+    }
+  };
+
+  const fetchProfile = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("Token not found");
+        return;
+      }
+
+      const response = await fetch(apiUrlProfile, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await response.json();
+      // console.log(data);
+      if (data.status === 0) {
+        setName(data.data.first_name + " " + data.data.last_name);
+        setProfilePict(data.data.profile_image);
+      } else {
+        console.error("Gagal mengambil saldo:", data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching balance:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBalance();
+    fetchProfile();
+  }, []);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
       <div className="md:col-span-5 p-6 dark:bg-gray-700">
-        <img src={ProfilePhoto} alt="Profile" className="w-auto h-auto rounded-full" />
+        <img src={imageSrc} alt="Profile" className="w-auto h-auto rounded-full" onError={() => setImageSrc(ProfilePhoto)} />
         <p className="text-gray-800 dark:text-gray-300 text-xl">Selamat datang</p>
-        <h3 className="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-200">{namaUser}</h3>
+        <h3 className="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-200">{name}</h3>
       </div>
 
       <div className="md:col-span-7 p-6 bg-red-600 dark:bg-gray-700 shadow-md rounded-lg flex flex-col justify-between">
