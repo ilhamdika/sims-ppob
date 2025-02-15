@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import IlustrasiLogin from "../assets/images/Illustrasi Login.png";
 import Logo from "../assets/images/logo.png";
@@ -36,6 +36,12 @@ const Login = () => {
       setErrorMessage("Terjadi kesalahan, coba lagi nanti.");
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-12 min-h-screen items-center">
